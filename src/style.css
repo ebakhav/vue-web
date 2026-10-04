@@ -4,7 +4,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 body{
   font-family: "Lexend", sans-serif;
 }
@@ -13,7 +12,6 @@ body{
   font-family: batman;
   src: url(../fonts/batmfo__.ttf);
 }
-
 
 @custom-variant dark (&:is(.dark *));
 
