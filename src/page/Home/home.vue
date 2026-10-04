@@ -3,17 +3,50 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-    <div class="layout">
-    <Button variant="destructive">Click Me</Button>
+    <div class="fondo-home">
+      <h1>
+      <span>Diseño</span> Web y 
+       <br/> 
+       Apps <span>interactivas</span>
+       </h1>
+     
+     <div class="botones">
+     
+         <Button variant="default">
+          <RouterLink to="/indecision">yes or no</RouterLink>
+         </Button>
+         <Button variant="default">
+          <RouterLink to="/batman">Batman</RouterLink>
+         </Button>
+         <Button variant="default">
+          <RouterLink to="/barbie">barbie</RouterLink>
+         </Button>
+         <Button variant="default">
+          <a href="https://www.upv.es">UPV</a>
+         </Button>
+
+
+      </div>
+    
     </div>
-    <h1>Home page </h1>
+   
 </template>
 
 <style scoped>
 
-.layout {
-    margin: 20px;
+.fondo-home{
+    background-color: rgb(21,25,52);
+    height: 100vh;
+    color: rgb(24,182,246);
+}
+
+.botones > Button {
+    background-color: rgb(24,182,246);
+    margin-right: 0.5rem;
 }
 
 
+.botones > Button:hover {
+     background-color: rgba(24,182,246,0.7);
+}
 </style>
