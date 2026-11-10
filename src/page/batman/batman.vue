@@ -120,52 +120,58 @@ const scrollToSection = (sectionId: string) => {
 </template>
 
 <style scoped>
+
 .batman {
-font-family: Arial, Helvetica, sans-serif;
-}
-
-.icon-home{
-    color:aqua;
-    width: 3rem;
-    height: 3rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 
-.icon-home:hover {
-    color:bisque;
-    background-color:skyblue; 
-
-}
+/* NAVIGATION */
 
 .extra-nav {
-  background-color: white;
-  opacity: 0.7;
-  box-shadow: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: fixed;
   top: 0;
-  width: 11rem;
-  border-radius: 0 0 1rem 0;
-  z-index: 1;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
 }
 
-@media (min-width: 640px){
-  .extra-nav {
-    width: 100%;
-    border-radius: 0;
-    opacity: 1;
-    left: 0;
-  }
+.icon-home {
+  color: aqua;
+  width: 3rem;
+  height: 3rem;
 }
+
+.icon-home:hover {
+  color: bisque;
+}
+
+
+/* HEADER */
+
+.titulus {
+  position: relative;
+}
+
 .titulus-img {
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center center;
-  background-image: url("../public/imag/batman/batman.jpg");
-  
+  background-image: url("/imag/batman/batman.jpg");
+
   min-height: 100vh;
+  transition: background-size 0.5s;
 }
 
 .titulus-img:hover {
-  background-size: 115% 115%;
+  background-size: 115% auto;
 }
 
 .titulus > h1 {
@@ -173,10 +179,10 @@ font-family: Arial, Helvetica, sans-serif;
   top: 63%;
   width: 100%;
   text-align: center;
-  font-size: 5rem; 
+  font-size: 5rem;
   color: white;
-  pointer-events:none; 
-  font-family: batman;
+  pointer-events: none;
+  font-family: batman, Arial, sans-serif;
 }
 
 .titulus > p {
@@ -186,40 +192,59 @@ font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   font-size: 2rem;
   color: white;
-  pointer-events:none;
-    font-family: batman; 
-    display: none;
+  pointer-events: none;
+  font-family: batman, Arial, sans-serif;
+  display: none;
 }
 
-@media (min-width: 768px) {
-    .titulus > p {
-        display: block;
-    }
-    .titulus > h {
-        color: red;
-    }
-}
+
+/* VEHICLES */
 
 #vehiculis {
   max-width: 510px;
   margin: 0 auto;
   padding: 4rem 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.vehiculis-arca {
+  order: 1;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .vehiculis-titulus {
-  height: 5.5rem; /* 88px */
+  height: 5.5rem;
   font-size: 2rem;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .item {
   padding: 1.5rem 0;
-  height: 500px;
+  height: 540px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.item > img {
+  width: 90%;
+  max-width: 450px;
+  height: auto;
 }
 
 .unus {
-  background-color: rgba(220, 220, 220, 0.2) ; 
+  background-color: rgba(220, 220, 220, 0.2);
 }
 
 .duo {
@@ -229,16 +254,107 @@ font-family: Arial, Helvetica, sans-serif;
 .tribus {
   background-color: rgba(220, 220, 220, 0.8);
 }
- 
+
+.notitia {
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+}
+
 .notitia > small {
   font-weight: bold;
   padding: 1rem;
 }
- 
+
 .notitia > h2 {
- font-size: 1.7rem; 
- font-weight: 600;
- color: rgba(0, 0, 0, 0.7);
- padding-bottom: 1rem;
-} 
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+  padding-bottom: 1rem;
+}
+
+
+/* IMAGES AND CONTACT */
+
+#videre,
+#contactos {
+  min-height: 50vh;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+
+/* TABLET */
+
+@media (min-width: 640px) {
+
+  #vehiculis {
+    max-width: 576px;
+  }
+
+}
+
+
+/* MEDIUM SCREENS */
+
+@media (min-width: 768px) {
+
+  .titulus > p {
+    display: block;
+  }
+
+  #vehiculis {
+    max-width: 900px;
+  }
+
+  .item {
+    flex-direction: row;
+    height: 320px;
+  }
+
+  .notitia {
+    width: 40%;
+  }
+
+  .item > img {
+    width: 55%;
+  }
+
+  .unus > img {
+    order: -1;
+  }
+
+}
+
+
+/* LARGE SCREENS */
+
+@media (min-width: 1024px) {
+
+  #vehiculis {
+    max-width: 1080px;
+  }
+
+  .item {
+    flex-direction: column;
+    height: 540px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vehiculis-arca {
+    flex-direction: row;
+  }
+
+  .notitia {
+    width: 90%;
+  }
+
+  .item > img {
+    width: 90%;
+  }
+
+}
+
 </style>
