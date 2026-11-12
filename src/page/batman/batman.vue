@@ -1,5 +1,7 @@
+
 <script lang="ts" setup>
-import { House } from '@lucide/vue';
+import { House, Menu } from '@lucide/vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 import {
   NavigationMenu,
@@ -9,174 +11,252 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 
- import { Card, CardContent } from '@/components/ui/card'
- import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  } from '@/components/ui/carousel'
-  import Autoplay from 'embla-carousel-autoplay'
+import { Toggle } from '@/components/ui/toggle'
+import CarrusImagen from '@/components/carrusimagen.vue'
 
+// Navegación entre secciones
 const scrollToSection = (sectionId: string) => {
-    if (sectionId === "#") {
-        window.scrollTo({ top: 0, behavior: "smooth"});
-        return
-    }
-    const element = document.querySelector<HTMLElement>(sectionId);
+  if (sectionId === '#') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return
+  }
 
-    if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start"});
-    }
+  const element = document.querySelector<HTMLElement>(sectionId)
+
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
 }
 
+// Fotografías
+const photos = [
+  'justice', 'arkham', 'superman','varios','villana','villano','grupo','robin','anne', 'joker',
+  'resplandor', 'cat', 'gafas', 'league', 'fondoVerde',
+]
 
-const photos = ["justice", "arkham", "superman", "varios", "villana", "villano", "grupo", "robin", "anne", "joker", "resplandor", "cat", "gafas", "league", "fondoVerde"]; 
+// Menú responsive
+const vidreMenu = ref<boolean>(true)
 
+const handleResize = () => {
+  if (window.innerWidth < 640) {
+    vidreMenu.value = false
+  } else {
+    vidreMenu.value = true
+  }
+}
+
+onMounted(() => {
+  handleResize()
+  window.addEventListener('resize', handleResize)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
-
-
 <template>
-   <div class="batman">
-    <nav class="extra-nav flex  flex-col sm:flex-row justify-between px-3">
- <RouterLink to ="/">
-  <House class="icon-home" />
-       </RouterLink>
+  <div class="batman">
+
+    <!-- Botón del menú móvil -->
+    <Toggle
+      class="fixed top-2 right-4 z-50 bg-slate-500 sm:hidden"
+      @click="vidreMenu = !vidreMenu"
+    >
+      <Menu />
+    </Toggle>
+
+    <!-- Navegación -->
+    <nav
+      v-if="vidreMenu"
+      class="extra-nav flex flex-col justify-between px-3 sm:flex-row"
+    >
+      <RouterLink to="/">
+        <House class="icon-home" />
+      </RouterLink>
 
       <NavigationMenu>
-    <NavigationMenuList class="flex flex-col sm:flex-row">
-      <NavigationMenuItem>
-        <a href="#" @click.prevent="scrollToSection('#')">
-         <NavigationMenuLink :class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']" >
-          Portada
-          </NavigationMenuLink>
-        </a>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <a href="#vehiculis" @click.prevent="scrollToSection('#vehiculis')">
-           <NavigationMenuLink :class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']" >
-             Vehiculos
-           </NavigationMenuLink>
-        </a>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <a href="#videre" @click.prevent="scrollToSection('#videre')" >
-           <NavigationMenuLink :class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']" >
-              Imagines 
-           </NavigationMenuLink>
-        </a>
-      </NavigationMenuItem>
-       <NavigationMenuItem>
-        <a href="#contactos" @click.prevent="scrollToSection('#contactos')">
-           <NavigationMenuLink :class="[navigationMenuTriggerStyle(), 'text-md hover:bg-brand-purple hover:text-white transition-colors']" >
-              Contacto 
-           </NavigationMenuLink>
-        </a>
-      </NavigationMenuItem>
+        <NavigationMenuList class="flex flex-col sm:flex-row">
 
+          <NavigationMenuItem>
+            <a href="#" @click.prevent="scrollToSection('#')">
+              <NavigationMenuLink
+                :class="[
+                  navigationMenuTriggerStyle(),
+                  'text-md hover:bg-brand-purple hover:text-white transition-colors',
+                ]"
+              >
+                Portada
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-    </NavigationMenuList>
-  </NavigationMenu>
+          <NavigationMenuItem>
+            <a
+              href="#vehiculis"
+              @click.prevent="scrollToSection('#vehiculis')"
+            >
+              <NavigationMenuLink
+                :class="[
+                  navigationMenuTriggerStyle(),
+                  'text-md hover:bg-brand-purple hover:text-white transition-colors',
+                ]"
+              >
+                Vehiculos
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-  
+          <NavigationMenuItem>
+            <a
+              href="#videre"
+              @click.prevent="scrollToSection('#videre')"
+            >
+              <NavigationMenuLink
+                :class="[
+                  navigationMenuTriggerStyle(),
+                  'text-md hover:bg-brand-purple hover:text-white transition-colors',
+                ]"
+              >
+                Imagines
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
+          <NavigationMenuItem>
+            <a
+              href="#contactos"
+              @click.prevent="scrollToSection('#contactos')"
+            >
+              <NavigationMenuLink
+                :class="[
+                  navigationMenuTriggerStyle(),
+                  'text-md hover:bg-brand-purple hover:text-white transition-colors',
+                ]"
+              >
+                Contacto
+              </NavigationMenuLink>
+            </a>
+          </NavigationMenuItem>
 
-   </nav>
-    
+        </NavigationMenuList>
+      </NavigationMenu>
+    </nav>
 
-    <header class="titulus"> 
-    <h1>Batman</h1>
-    <div id="titulus-batman" class="titulus-img"></div>
-    <p>El puede tomar la decision que nadie mas puede, la decision correcta</p>
+    <!-- HEADER -->
+    <header class="titulus">
+      <h1>Batman</h1>
+
+      <div
+        id="titulus-batman"
+        class="titulus-img"
+      ></div>
+
+      <p>
+        El puede tomar la decision que nadie mas puede,
+        la decision correcta
+      </p>
     </header>
 
+    <!-- VEHÍCULOS -->
     <section id="vehiculis">
-  <div class="vehiculis-arca">
-    
-     <div class="item unus">
-        <div class="notitia">
-          <h2>Avión</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula vulputate elit eget fermentum. Ut laoreet ante lacus. Quisque ut tincidunt metus. Curabitur congue, arcu nec tempus sodales, neque sem ultrices mauris, eu tincidunt nibh nibh eu massa. Aenean rhoncus quis nibh ac facilisis.</p>
-          <small>Fabricado en 2005</small>
+
+      <div class="vehiculis-arca">
+
+        <div class="item unus">
+          <div class="notitia">
+            <h2>Avión</h2>
+
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Sed vehicula vulputate elit eget fermentum.
+              Ut laoreet ante lacus. Quisque ut tincidunt metus.
+              Curabitur congue, arcu nec tempus sodales,
+              neque sem ultrices mauris, eu tincidunt nibh nibh eu massa.
+              Aenean rhoncus quis nibh ac facilisis.
+            </p>
+
+            <small>Fabricado en 2005</small>
+          </div>
+
+          <img
+            src="/imag/batman/avion.jpg"
+            alt="Avión de Batman"
+          />
         </div>
-        <img src="/public/imag/batman/avion.jpg"/>
+
+        <div class="item duo">
+          <div class="notitia">
+            <h2>Moto</h2>
+
+            <p>
+              Nulla aliquip cupidatat voluptate veniam nostrud
+              aliquip sit enim officia. Sit eu pariatur officia
+              qui dolor adipisicing cupidatat.
+              Sit consectetur et eu ut esse laboris nulla.
+            </p>
+
+            <small>Fabricado en 2006</small>
+          </div>
+
+          <img
+            src="/imag/batman/moto.jpg"
+            alt="Moto de Batman"
+          />
+        </div>
+
+        <div class="item tribus">
+          <div class="notitia">
+            <h2>Coche</h2>
+
+            <p>
+              Irure adipisicing est minim eu ad dolor.
+              Eu ea commodo pariatur ut occaecat in cupidatat
+              reprehenderit ut laborum duis.
+              Sunt minim ex fugiat reprehenderit.
+              Lorem consectetur reprehenderit commodo non.
+            </p>
+
+            <small>Fabricado en 2007</small>
+          </div>
+
+          <img
+            src="/imag/batman/car.jpg"
+            alt="Coche de Batman"
+          />
+        </div>
+
       </div>
 
-      <div class="item duo">
-        <div class="notitia">
-          <h2>Moto</h2>
-          <p>Nulla aliquip cupidatat voluptate veniam nostrud aliquip sit enim officia. Sit eu pariatur officia qui dolor adipisicing cupidatat. Sit consectetur et eu ut esse laboris nulla.</p>
-          <small>Fabricado en 2006</small>
-        </div>
-        <img src="/public/imag/batman/moto.jpg"/>
+      <div class="vehiculis-titulus">
+        <h1>Vehículos de Batman</h1>
       </div>
-      
-      <div class="item tribus">
-        <div class="notitia">
-          <h2>Coche</h2>
-          <p>Irure adipisicing est minim eu ad dolor. Eu ea commodo pariatur ut occaecat in cupidatat reprehenderit ut laborum duis. Sunt minim ex fugiat reprehenderit. Lorem consectetur reprehenderit commodo non</p>
-          <small>Fabricado en 2007</small>
-        </div>
-        <img src="/public/imag/batman/car.jpg"/>
-      </div>
-    </div>
 
-    <div class="vehiculis-titulus">
-      <h1>Vehículos de Batman</h1>
-    </div>
- </section>
+    </section>
 
- <section
-  id="videre"
-  class="w-full min-h-[60vh] lg:min-h-[95vh] flex justify-center items-center overflow-hidden px-4 bg-gray-900"
->
-  <Carousel
-    class="w-full max-w-md md:max-w-2xl lg:max-w-4xl"
-     :opts="{
-              dragFree: true,
-              loop: true 
-     }" 
-      :plugins="[Autoplay({
-      delay: 2000,
-      })]"
-  >
-    <CarouselContent>
-      <CarouselItem
-        v-for="photo in photos"
-        :key="photo"
-        class="basis-full"
-      >
-        <div class="p-1 w-full">
-          <Card class="w-full overflow-hidden bg-gray-900 border-none">
-            <CardContent 
-             class="flex aspect-[6/4] items-center justify-center p}"
-             >
-              <img
-                :src="`/imag/batman/${photo}.jpg`"
-                :alt="'imagen $(1) de Batman'"
-                class="block w-full h-full object-cover"
-                
-              
-            </CardContent>
-          </Card>
-        </div>
-      </CarouselItem>
-    </CarouselContent>
+    <!-- IMÁGENES: CARRUSEL -->
+    <section
+      id="videre"
+      class="w-full min-h-[60vh] lg:min-h-[95vh] flex justify-center items-center overflow-hidden px-4 bg-gray-900"
+    >
+      <CarrusImagen
+        :photos="photos"
+        base-path="/imag/batman"
+        :autoplay-delay="2000"
+        :loop="true"
+        :drag-free="true"
+      />
+    </section>
 
-     <CarouselPrevious
-  class="hidden md:flex justify-center items-center bg-gray-900 text-white"
-/>
+    <!-- CONTACTO -->
+    <section id="contactos">
+      <h2>Contacto</h2>
+    </section>
 
-<CarouselNext
-  class="hidden md:flex justify-center items-center bg-gray-900 text-white"
-/>
-</Carousel>
-</section>
-
-
-   </div>
+  </div>
 </template>
 
 <style scoped>
